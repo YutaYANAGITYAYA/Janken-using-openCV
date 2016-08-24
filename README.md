@@ -1,4 +1,4 @@
-# Janken-with-Chino
+# Janken
 
 ![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
 
