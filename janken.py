@@ -7,7 +7,7 @@ def show_result(x,y):
     print u"　　あなたの手: %s"%hand[y]
     res = resMat[x][y]
     print result[res]
-    img = cv2.imread("data\%s.jpg"%res)
+    img = cv2.imread("%s.jpg"%res)
     cv2.imshow("janken",img)
 
 def counter():
@@ -60,7 +60,7 @@ resMat=[[0,-1,1],[1,0,-1],[-1,1,0]]
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5,5))
 
 cam = cv2.VideoCapture(0)
-mov = cv2.VideoCapture("data\chi.avi")
+mov = cv2.VideoCapture("chi.avi")
 
 cv2.namedWindow('CamImg')
 cv2.createTrackbar('Hue', 'CamImg', 10, 180, nothing)
@@ -81,7 +81,7 @@ while (cv2.waitKey(2000)!=27):
         fing += counter()
     yy = 0 if fing<5 else 1 if fing<25 else 2
     cc = np.random.randint(3)
-    img = cv2.imread("data\%s.png"%cc)
+    img = cv2.imread("%s.png"%cc)
     cv2.imshow("janken",img)
     cv2.waitKey(1000)
     show_result(cc,yy)
