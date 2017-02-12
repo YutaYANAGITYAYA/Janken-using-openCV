@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
+import os
 import cv2
 import numpy as np
 
 def show_result(x,y):
-    print u"チノちゃんの手: %s"%hand[x]
-    print u"　　あなたの手: %s"%hand[y]
+    print (u"チノちゃんの手: %s"%hand[x])
+    print (u"　　あなたの手: %s"%hand[y])
     res = resMat[x][y]
-    print result[res]
-    img = cv2.imread("data\%s.jpg"%res)
+    print (result[res])
+    img = cv2.imread(os.path.join("data","%s.jpg"%res))
     cv2.imshow("janken",img)
 
 def counter():
@@ -30,7 +31,7 @@ def counter():
         cnt = contours[max_idx]
         hull = cv2.convexHull(cnt, returnPoints = False)
         defects = cv2.convexityDefects(cnt, hull)
-        for i in xrange(defects.shape[0]):
+        for i in range(defects.shape[0]):
             s_idx,e_idx,f_idx,depth = defects[i,0]
             start = tuple(cnt[s_idx][0])
             end = tuple(cnt[e_idx][0])
@@ -49,10 +50,12 @@ def counter():
 
 hand = {0:u"グー", 1:u"チョキ", 2:u"パー"}
 result = {-1:u"チノちゃんの勝ち\n", 0:u"あいこ．．．\n", 1:u"あなたの勝ち\n"}
-resMat=[[0,-1,1],[1,0,-1],[-1,1,0]]
+resMat=[[ 0,-1, 1],
+        [ 1, 0,-1],
+        [-1, 1, 0]]
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7))
 cam = cv2.VideoCapture(0)
-mov = cv2.VideoCapture("data\chino.avi")
+mov = cv2.VideoCapture(os.path.join("data","chino.avi"))
 
 while (cv2.waitKey(2000)!=27):
     mov.set(cv2.CAP_PROP_POS_FRAMES,0)
@@ -65,11 +68,11 @@ while (cv2.waitKey(2000)!=27):
         cv2.waitKey(33)
     
     fing = 0
-    for i in xrange(10):
+    for i in range(10):
         fing += counter()
     yy = 0 if fing<5 else 1 if fing<25 else 2
     cc = np.random.randint(3)
-    img = cv2.imread("data\%s.png"%cc)
+    img = cv2.imread(os.path.join("data","%s.png"%cc))
     cv2.imshow("janken",img)
     cv2.waitKey(1000)
     show_result(cc,yy)
